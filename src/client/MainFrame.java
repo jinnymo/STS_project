@@ -3,6 +3,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -20,8 +21,8 @@ public class MainFrame extends JFrame {
 	ObjectMessage objectMessage = new ObjectMessage();
 	Socket socket;
 	ObjectOutputStream oos;
-	BufferedReader reader;
-	
+	ObjectInputStream ois;
+	Thread input;
 	
 	public Output getOutput() {
 		return output;
@@ -43,25 +44,19 @@ public class MainFrame extends JFrame {
 			socket = new Socket("localhost", 5000);
 			
 			oos = new ObjectOutputStream(socket.getOutputStream());	
-			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			ois = new ObjectInputStream(socket.getInputStream());
 			
 			output = new Output(oos, objectMessage);
 			
 			
-			inputThread = new InputThread(reader);
-			Thread input = new Thread(inputThread);
+			inputThread = new InputThread(socket);
+			input = new Thread(inputThread);
 			
 			
 			
 			input.start();
+			System.out.println("!@#");
 			
-			try {
-				
-				input.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -70,6 +65,8 @@ public class MainFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 
@@ -85,7 +82,7 @@ public class MainFrame extends JFrame {
 	private void setInitLayout() {
 
 		setLayout(null);
-		setResizable(false);
+ 		setResizable(false);
 		setLocation(0, 0);
 		setVisible(true);
 
