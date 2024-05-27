@@ -16,28 +16,41 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Header.ObjectMessage;
+import Header.UserInfo;
+
 public class LoginJPanel extends JPanel {
 
+	
+	private UserInfo userInfo;
+	private MainFrame mContext;
+	
 	private ImageIcon logoImg;
 	private ImageIcon serverImg;
 	private ImageIcon serverImgClick;
 	private JLabel logoLabel;
 	private JLabel textLabel;
-	private JTextField nameField;
+	private JTextField idField;
+	private JTextField pwdField;
 	private JButton submitBtn;
 
 	private InetAddress local;
-	
+
 	private String ip;
 
-	public LoginJPanel() {
+	
+
+	public LoginJPanel(MainFrame mContext) {
+		this.mContext = mContext;
 		logoImg = new ImageIcon("img/chat_logo.png");
 		serverImg = new ImageIcon("img/enter_server.png");
 		serverImgClick = new ImageIcon("img/enter_server_2.png");
 		logoLabel = new JLabel(logoImg);
 		textLabel = new JLabel(
-				"<html>" + " &nbsp; &nbsp; &nbsp; 이름을 신중하게 작성해주세요." + "<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
-		nameField = new JTextField("이름입력");
+				"<html>" + " &nbsp; &nbsp; &nbsp; 아이디를 신중하게 작성해주세요." +
+		"<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
+		idField = new JTextField("아이디 입력");
+		pwdField = new JTextField("비밀번호 입력");
 		submitBtn = new JButton(serverImg);
 
 		ip = getMyIp();
@@ -61,12 +74,16 @@ public class LoginJPanel extends JPanel {
 		textLabel.setHorizontalAlignment(JLabel.CENTER);
 		// textLabel.setHorizontalTextPosition(JLabel.CENTER);
 
-		nameField.setSize(150, 50);
-		nameField.setLocation(125, 430);
-		nameField.setHorizontalAlignment(JLabel.CENTER);
+		idField.setSize(150, 50);
+		idField.setLocation(125, 430);
+		idField.setHorizontalAlignment(JLabel.CENTER);
+		
+		pwdField.setSize(150,50);
+		pwdField.setLocation(125,500);
+		pwdField.setHorizontalAlignment(JLabel.CENTER);
 
 		submitBtn.setSize(150, 70);
-		submitBtn.setLocation(125, 500);
+		submitBtn.setLocation(125, 580);
 		submitBtn.setHorizontalAlignment(JLabel.CENTER);
 		submitBtn.setRolloverIcon(serverImgClick);
 
@@ -76,7 +93,8 @@ public class LoginJPanel extends JPanel {
 		setLayout(null);
 		add(logoLabel);
 		add(textLabel);
-		add(nameField);
+		add(idField);
+		add(pwdField);
 		add(submitBtn);
 	}
 
@@ -87,13 +105,21 @@ public class LoginJPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TO-DO 서버접속 버튼 누른 후 액션 서버로 현재ip및 이름 푸시
-				System.out.println(local.getHostAddress());
+				mContext.connectServer();
+				System.out.println("데이터 전송");
+				userInfo = new UserInfo();
+				userInfo.setId(idField.getText());
+				userInfo.setPwd(pwdField.getText());
+				mContext.objectMessage.setUserInfo(userInfo);
+				
+				mContext.output.checkUser();
+
 			}
 		});
 
 	}
-	
-	private String getMyIp() {
+
+	private String getMyIp() {//굳이 사용안해도 될거같음;;;;
 
 		try {
 			// 1. 시스템의 모든 네트워크 인터페이스를 나열합니다.
@@ -109,22 +135,16 @@ public class LoginJPanel extends JPanel {
 					// 5. inetAddress가 IPv4 주소이고 루프백 주소가 아닌지 확인합니다.
 					if (inetAddress instanceof Inet4Address && !inetAddress.isLoopbackAddress()) {
 						String ipAddress = inetAddress.getHostAddress();
-						// 6. IP 주소가 "172."로 시작하는지 확인합니다.
-						if (ipAddress.startsWith("172.")) {
-							// 7. 조건에 맞는 IP 주소를 출력합니다.
-							System.out.println("IP Address: " + ipAddress);
-							return ipAddress;
-						}else {
-							System.out.println("ip 서칭 오류 발생");
-						}
+						System.out.println("IP Address: " + ipAddress);
+						// 7. 조건에 맞는 IP 주소를 출력합니다.
+						return ipAddress;
 					}
 				}
-				
 			}
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 }
