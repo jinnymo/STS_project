@@ -2,13 +2,13 @@ package Header;
 
 import java.io.Serializable;
 
-public class UserInfo implements Serializable{
+public class UserInfo implements Serializable {
 	private static final long serialVersionUID = 1L;//직렬화 버전 UID //L접미사 롱타입
 	private String id;
 	private String pwd;
 
 
-	public UserInfo() {
+	public UserInfo(String id , String pwd) {
 		id = null;
 		pwd = null;
 	}

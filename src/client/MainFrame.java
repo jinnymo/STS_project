@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
 	Output output;
 	InputThread inputThread;
 	LoginJPanel loginJPanel;
+	PanelAdapter panelAdapter;
 	ObjectMessage objectMessage = new ObjectMessage();
 	Socket socket;
 	ObjectOutputStream oos;
@@ -41,15 +42,13 @@ public class MainFrame extends JFrame {
 	public void connectServer() {
 		
 		try {
-			socket = new Socket("localhost", 5000);
+			socket = new Socket("192.168.0.25", 5000);
 			
 			oos = new ObjectOutputStream(socket.getOutputStream());	
-			ois = new ObjectInputStream(socket.getInputStream());
+			//ois = new ObjectInputStream(socket.getInputStream());
 			
-			output = new Output(oos, objectMessage);
-			
-			
-			inputThread = new InputThread(socket);
+			output = new Output(oos);
+			inputThread = new InputThread(socket,this);
 			input = new Thread(inputThread);
 			
 			
@@ -66,31 +65,37 @@ public class MainFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		
 
 	}
 
 	private void initData() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400, 700);
+		setSize(416, 739);
 
 		loginJPanel = new LoginJPanel(this);
-
+		panelAdapter = new PanelAdapter();
 	}
 
 	private void setInitLayout() {
 
 		setLayout(null);
- 		setResizable(false);
+ 		//setResizable(false);
 		setLocation(0, 0);
 		setVisible(true);
-
+		add(panelAdapter);
+		panelAdapter.setVisible(false);
 		add(loginJPanel);
 
 	}
 
 	public static void main(String[] args) {
 		new MainFrame();
+		try {
+			Thread.sleep(10000000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -107,12 +107,10 @@ public class LoginJPanel extends JPanel {
 				// TO-DO 서버접속 버튼 누른 후 액션 서버로 현재ip및 이름 푸시
 				mContext.connectServer();
 				System.out.println("데이터 전송");
-				userInfo = new UserInfo();
-				userInfo.setId(idField.getText());
-				userInfo.setPwd(pwdField.getText());
-				mContext.objectMessage.setUserInfo(userInfo);
-				
-				mContext.output.checkUser();
+				userInfo = new UserInfo(idField.getText(),pwdField.getText());
+				ObjectMessage om = new ObjectMessage();
+				om.setUserInfo(userInfo);
+				mContext.output.checkUser(om);
 
 			}
 		});

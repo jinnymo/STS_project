@@ -8,14 +8,14 @@ import Header.ObjectMessage;
 public class Output {
 
 	ObjectOutputStream oos;
-	ObjectMessage objectMessage;
+	
 
-	public Output(ObjectOutputStream oos, ObjectMessage objectMessage) {
+	public Output(ObjectOutputStream oos) {
 		this.oos = oos;
-		this.objectMessage = objectMessage;
+
 	}
 	
-	public void checkUser() {
+	public void checkUser(ObjectMessage objectMessage) {
 		try {
 			oos.writeObject(objectMessage);
 		} catch (IOException e) {
