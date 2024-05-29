@@ -19,7 +19,7 @@ public class MainFrame extends JFrame {
 	InputThread inputThread;
 	LoginJPanel loginJPanel;
 	PanelAdapter panelAdapter;
-	ObjectMessage objectMessage = new ObjectMessage();
+
 	Socket socket;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;

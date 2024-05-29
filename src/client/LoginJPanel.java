@@ -108,8 +108,7 @@ public class LoginJPanel extends JPanel {
 				mContext.connectServer();
 				System.out.println("데이터 전송");
 				userInfo = new UserInfo(idField.getText(),pwdField.getText());
-				ObjectMessage om = new ObjectMessage();
-				om.setUserInfo(userInfo);
+				ObjectMessage om = new ObjectMessage(1,userInfo);
 				mContext.output.checkUser(om);
 
 			}

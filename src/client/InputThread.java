@@ -7,6 +7,7 @@ import java.net.Socket;
 import javax.swing.JOptionPane;
 
 import Header.ObjectMessage;
+import Header.UserInfo;
 
 public class InputThread  implements Runnable{
 
@@ -23,21 +24,20 @@ public class InputThread  implements Runnable{
 	public void run() {
 
 		try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())){
-			ObjectMessage objectMessage;
+			
 			System.out.println(":SAdf");
-			while((objectMessage = (ObjectMessage)ois.readObject())!= null) {
-				System.out.println("objectMessage : " + objectMessage);
+			
+			while(true) {
 				
-				if (objectMessage.getCode1() == 1 && objectMessage.getStatusCode().getCode() == 601) {
-					mContext.loginJPanel.setVisible(false);
-					mContext.panelAdapter.setVisible(true);
-					JOptionPane.showMessageDialog(null, objectMessage.getStatusCode().toString());
-				}else if (objectMessage.getCode1() == 1 &&objectMessage.getStatusCode().getCode() == 600) {
+				ObjectMessage objectMessage = (ObjectMessage)ois.readObject();
+				System.out.println("objectMessage : " );
+				
+				if (objectMessage.getCode1() == 1) {
 					mContext.loginJPanel.setVisible(false);
 					mContext.panelAdapter.setVisible(true);
 					JOptionPane.showMessageDialog(null, objectMessage.getStatusCode().toString());
 				}else if (objectMessage.getCode1() == 2) {
-					System.out.println("ad");
+					System.out.println(objectMessage.getUserInfo().getId());
 				}
 			}
 		} catch (Exception e) {
