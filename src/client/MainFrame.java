@@ -12,7 +12,9 @@ import javax.swing.JFrame;
 
 import Header.ObjectMessage;
 import lombok.Getter;
-
+import lombok.Setter;
+@Getter
+@Setter
 public class MainFrame extends JFrame {
 
 	Output output;
@@ -24,7 +26,9 @@ public class MainFrame extends JFrame {
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 	Thread input;
-
+	
+	private String name;
+	
 	public Output getOutput() {
 		return output;
 	}
@@ -35,7 +39,7 @@ public class MainFrame extends JFrame {
 
 		// Socket socket = new Socket("localhost", 5000);
 		try {
-			socket = new Socket("localhost", 5000);
+			socket = new Socket("192.168.0.7", 5002);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			//ois = new ObjectInputStream(socket.getInputStream());
 			output = new Output(oos);
@@ -61,7 +65,7 @@ public class MainFrame extends JFrame {
 		setSize(416, 739);
 
 		loginJPanel = new LoginJPanel(this);
-		panelAdapter = new PanelAdapter();
+		panelAdapter = new PanelAdapter(this);
 	}
 
 	private void setInitLayout() {

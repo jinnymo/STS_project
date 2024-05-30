@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 public class ObjectMessage implements Serializable {
 
 	private static final long serialVersionUID = 3L;// 직렬화 버전 UID //L접미사 롱타입
@@ -27,6 +28,9 @@ public class ObjectMessage implements Serializable {
 	public ObjectMessage(String[] users) {
 		this.target = users;
 	}
-
+	public ObjectMessage(String[] users, String message) {
+		this.target = users;
+		this.message = message;
+	}
 
 }

@@ -27,12 +27,24 @@ public class InputThread implements Runnable {
 
 		try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
 
-			System.out.println(":SAdf");
+			//System.out.println(":SAdf");
 			ObjectMessage objectMessage;
 			while ((objectMessage = (ObjectMessage) ois.readObject()) != null) {
 				System.out.println("objectMessage : " + objectMessage.toString());
-				if (objectMessage.getMessage() == null) {
-					mContext.panelAdapter.getUserListPanel().upDateUser(objectMessage.getTarget());
+				String name = objectMessage.getName();
+				String[] targets = objectMessage.getTarget();
+				String message = objectMessage.getMessage();
+				
+				if (name == null && targets!=null && message == null) {
+					mContext.panelAdapter.getUserListPanel().upDateUser(targets);
+				}else if(name == null && targets!=null && message != null) {
+					mContext.panelAdapter.getRoomListPanel().addData(targets);
+					//mContext.panelAdapter.getRoomListPanel().getChatPanels().add(new ChatPanel(mContext));
+					mContext.panelAdapter.addCahtPanel(targets,mContext);
+				}else if (name != null && targets!=null && message != null) {
+					
+					System.out.println(objectMessage.toString());
+					mContext.panelAdapter.searchChatPanelAdd(name,targets,message);
 				}
 //				
 //				if (objectMessage.getCode1() == 1) {

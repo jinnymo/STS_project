@@ -44,8 +44,8 @@ public class LoginJPanel extends JPanel {
 		serverImgClick = new ImageIcon("img/enter_server_2.png");
 		logoLabel = new JLabel(logoImg);
 		textLabel = new JLabel(
-				"<html>" + " &nbsp; &nbsp; &nbsp; 아이디를 신중하게 작성해주세요." + "<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
-		idField = new JTextField("아이디 입력");
+				"<html>" + " &nbsp; &nbsp; &nbsp; 정확한 이름을 작성해주세요." + "<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
+		idField = new JTextField("이름 입력");
 		pwdField = new JTextField("비밀번호 입력");
 		submitBtn = new JButton(serverImg);
 
@@ -90,7 +90,7 @@ public class LoginJPanel extends JPanel {
 		add(logoLabel);
 		add(textLabel);
 		add(idField);
-		add(pwdField);
+		//add(pwdField);
 		add(submitBtn);
 	}
 
@@ -104,7 +104,7 @@ public class LoginJPanel extends JPanel {
 				mContext.loginJPanel.setVisible(false);
 				mContext.panelAdapter.setVisible(true);
 				System.out.println("dd");
-			
+				mContext.panelAdapter.getNameTextArea().setText(idField.getText());
 				System.out.println("데이터 전송");
 				//userInfo = new UserInfo(idField.getText(), pwdField.getText());
 				ObjectMessage om = new ObjectMessage(idField.getText(),null,"");
