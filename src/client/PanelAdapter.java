@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import lombok.Getter;
+@Getter
 public class PanelAdapter extends JPanel implements ActionListener {
 
 	private JButton showUser;

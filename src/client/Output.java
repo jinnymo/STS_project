@@ -18,6 +18,7 @@ public class Output {
 	public void checkUser(ObjectMessage objectMessage) {
 		try {
 			oos.writeObject(objectMessage);
+			oos.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -24,37 +24,24 @@ public class MainFrame extends JFrame {
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 	Thread input;
-	
+
 	public Output getOutput() {
 		return output;
 	}
 
-	
 	public MainFrame() {
 		initData();
 		setInitLayout();
-		
-		
+
 		// Socket socket = new Socket("localhost", 5000);
-
-	}
-
-	public void connectServer() {
-		
 		try {
-			socket = new Socket("192.168.0.25", 5000);
-			
-			oos = new ObjectOutputStream(socket.getOutputStream());	
+			socket = new Socket("localhost", 5000);
+			oos = new ObjectOutputStream(socket.getOutputStream());
 			//ois = new ObjectInputStream(socket.getInputStream());
-			
 			output = new Output(oos);
-			inputThread = new InputThread(socket,this);
+			inputThread = new InputThread(socket, this);
 			input = new Thread(inputThread);
-			
-			
-			
 			input.start();
-			System.out.println("!@#");
 			
 
 		} catch (UnknownHostException e) {
@@ -64,9 +51,9 @@ public class MainFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 	}
+
+
 
 	private void initData() {
 
@@ -80,7 +67,7 @@ public class MainFrame extends JFrame {
 	private void setInitLayout() {
 
 		setLayout(null);
- 		//setResizable(false);
+		// setResizable(false);
 		setLocation(0, 0);
 		setVisible(true);
 		add(panelAdapter);
@@ -91,11 +78,8 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
 		new MainFrame();
-		try {
-			Thread.sleep(10000000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
+		
 	}
 }

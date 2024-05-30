@@ -21,10 +21,9 @@ import Header.UserInfo;
 
 public class LoginJPanel extends JPanel {
 
-	
 	private UserInfo userInfo;
 	private MainFrame mContext;
-	
+
 	private ImageIcon logoImg;
 	private ImageIcon serverImg;
 	private ImageIcon serverImgClick;
@@ -38,8 +37,6 @@ public class LoginJPanel extends JPanel {
 
 	private String ip;
 
-	
-
 	public LoginJPanel(MainFrame mContext) {
 		this.mContext = mContext;
 		logoImg = new ImageIcon("img/chat_logo.png");
@@ -47,8 +44,7 @@ public class LoginJPanel extends JPanel {
 		serverImgClick = new ImageIcon("img/enter_server_2.png");
 		logoLabel = new JLabel(logoImg);
 		textLabel = new JLabel(
-				"<html>" + " &nbsp; &nbsp; &nbsp; 아이디를 신중하게 작성해주세요." +
-		"<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
+				"<html>" + " &nbsp; &nbsp; &nbsp; 아이디를 신중하게 작성해주세요." + "<br>" + "서버 초기화 전까지 수정이 불가합니다." + "</html>");
 		idField = new JTextField("아이디 입력");
 		pwdField = new JTextField("비밀번호 입력");
 		submitBtn = new JButton(serverImg);
@@ -77,9 +73,9 @@ public class LoginJPanel extends JPanel {
 		idField.setSize(150, 50);
 		idField.setLocation(125, 430);
 		idField.setHorizontalAlignment(JLabel.CENTER);
-		
-		pwdField.setSize(150,50);
-		pwdField.setLocation(125,500);
+
+		pwdField.setSize(150, 50);
+		pwdField.setLocation(125, 500);
 		pwdField.setHorizontalAlignment(JLabel.CENTER);
 
 		submitBtn.setSize(150, 70);
@@ -105,18 +101,21 @@ public class LoginJPanel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TO-DO 서버접속 버튼 누른 후 액션 서버로 현재ip및 이름 푸시
-				mContext.connectServer();
+				mContext.loginJPanel.setVisible(false);
+				mContext.panelAdapter.setVisible(true);
+				System.out.println("dd");
+			
 				System.out.println("데이터 전송");
-				userInfo = new UserInfo(idField.getText(),pwdField.getText());
-				ObjectMessage om = new ObjectMessage(1,userInfo);
+				//userInfo = new UserInfo(idField.getText(), pwdField.getText());
+				ObjectMessage om = new ObjectMessage(idField.getText(),null,"");
 				mContext.output.checkUser(om);
-
+				
 			}
 		});
 
 	}
 
-	private String getMyIp() {//굳이 사용안해도 될거같음;;;;
+	private String getMyIp() {// 굳이 사용안해도 될거같음;;;;
 
 		try {
 			// 1. 시스템의 모든 네트워크 인터페이스를 나열합니다.
