@@ -46,7 +46,6 @@ public class ChatPanel extends JPanel implements ActionListener{
 		text = new JTextField("",20);
 		sendBtn = new JButton("전송");
 		bottomPanel = new JPanel();
-
 	}
 
 	private void setInitLayout() {

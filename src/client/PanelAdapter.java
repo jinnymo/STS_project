@@ -34,7 +34,6 @@ public class PanelAdapter extends JPanel implements ActionListener {
 	private JTextArea nameTextArea;
 
 	private MainFrame mContext;
-	//private String[] target;
 
 	PanelStatus panelStatus;
 
@@ -84,7 +83,6 @@ public class PanelAdapter extends JPanel implements ActionListener {
 		connectRoom.setLocation(300, 0);
 		nameTextArea.setLocation(100,0);
 		back.setRolloverIcon(arrowclick);
-
 	}
 
 	private void setInitLayout() {
@@ -101,7 +99,6 @@ public class PanelAdapter extends JPanel implements ActionListener {
 		//add(chatPanel);
 		add(userListPanel,0);
 		userListPanel.setVisible(true);
-		
 	}
 
 	private void addEventListener() {
@@ -110,25 +107,25 @@ public class PanelAdapter extends JPanel implements ActionListener {
 		back.addActionListener(this);
 		createRoom.addActionListener(this);
 		connectRoom.addActionListener(this);
-		
 	}
+	
 	public void addCahtPanel(String[] targets , MainFrame mContext) {
 		ChatPanel chatP = new ChatPanel(targets,mContext);
 		roomListPanel.getChatPanels().add(chatP);
 		add(chatP);
 		chatP.setVisible(false);
 	}
+	
 	public void searchChatPanelAdd(String name, String[] targets, String message) {
 		List<ChatPanel> chatPanels = roomListPanel.getChatPanels();
 		String sTarget = Arrays.toString(targets);
-		for (ChatPanel chatPanel : chatPanels) {
-			String sChatTarget = Arrays.toString(targets);
+		for (int i = 0; i < chatPanels.size(); i++) {
+			String sChatTarget = roomListPanel.returnJListText(i);
 			if (sTarget.equals(sChatTarget)) {
-				chatPanel.getModel().addElement(name+"님 : " + message);
+				chatPanels.get(i).getModel().addElement(name+"님 : " + message);
 			}
 		}
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == showUser) {
@@ -140,26 +137,18 @@ public class PanelAdapter extends JPanel implements ActionListener {
 		}else if (e.getSource() == createRoom) {
 			panelStatus = PanelStatus.ROOM;
 			String[] tgs = userListPanel.returnSelectUser();
-			ObjectMessage om = new ObjectMessage(nameTextArea.getText().toString()
-					,tgs,"");
+			ObjectMessage om = new ObjectMessage(nameTextArea.getText().toString(),tgs,"");
 			mContext.output.checkUser(om);
-			
-			
 		}else if (e.getSource() == connectRoom) {
 			if (chatPanel != null) {
 				chatPanel.setVisible(false);
 			}
-			
-			chatPanel = roomListPanel.returnChatPanel();
-			//chatPanel.setVisible(true);
+			this.chatPanel = roomListPanel.returnChatPanel();
 			panelStatus = PanelStatus.CHAT;
-			
-			//to-do
 		}
 		switchPanel();
 		
 	}
-
 	private void switchPanel() {
 		if (panelStatus == PanelStatus.USER) {
 			roomListPanel.setVisible(false);

@@ -29,20 +29,15 @@ public class UserListPanel extends JPanel implements ListSelectionListener {
 		scrolled = new JScrollPane(jList);
 		jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	}
-
 	private void setInitLayout() {
 		setLayout(null);
 		setSize(400, 550);
 		setLocation(0, 50);
 		setBackground(Color.blue);
-
 		scrolled.setSize(400, 550);
 		scrolled.setLocation(0, 0);
-
 		add(scrolled);
-
 	}
-
 	public void upDateUser(String[] users) {
 		model.removeAllElements();
 		for (int i = 0; i < users.length; i++) {
@@ -52,15 +47,10 @@ public class UserListPanel extends JPanel implements ListSelectionListener {
 
 	public String[] returnSelectUser() {
 		List<String> selectlist = jList.getSelectedValuesList();
-		
 		String[] selectUser = new String[selectlist.size()];
-
 		for (int i = 0; i < selectlist.size(); i++) {
 			selectUser[i] = selectlist.get(i);
 		}
-		
-		
-		//panelAdapter.getRoomListPanel().addData(selectUser);
 		return selectUser;
 	}
 

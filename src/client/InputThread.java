@@ -1,13 +1,9 @@
 package client;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
-
 import Header.ObjectMessage;
-import Header.UserInfo;
 
 public class InputThread implements Runnable {
 
@@ -26,35 +22,25 @@ public class InputThread implements Runnable {
 	public void run() {
 
 		try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
-
-			//System.out.println(":SAdf");
 			ObjectMessage objectMessage;
 			while ((objectMessage = (ObjectMessage) ois.readObject()) != null) {
-				System.out.println("objectMessage : " + objectMessage.toString());
 				String name = objectMessage.getName();
 				String[] targets = objectMessage.getTarget();
 				String message = objectMessage.getMessage();
 				
 				if (name == null && targets!=null && message == null) {
 					mContext.panelAdapter.getUserListPanel().upDateUser(targets);
+					//유저 업데이트 정보 get
 				}else if(name == null && targets!=null && message != null) {
 					mContext.panelAdapter.getRoomListPanel().addData(targets);
-					//mContext.panelAdapter.getRoomListPanel().getChatPanels().add(new ChatPanel(mContext));
 					mContext.panelAdapter.addCahtPanel(targets,mContext);
+					//채팅방 데이터 get
 				}else if (name != null && targets!=null && message != null) {
-					
 					System.out.println(objectMessage.toString());
 					mContext.panelAdapter.searchChatPanelAdd(name,targets,message);
+					//채팅 메세지 get
 				}
-//				
-//				if (objectMessage.getCode1() == 1) {
-//					mContext.loginJPanel.setVisible(false);
-//					mContext.panelAdapter.setVisible(true);
-//					JOptionPane.showMessageDialog(null, objectMessage.getStatusCode().toString());
-//				}else if (objectMessage.getCode1() == 2) {
-//					//System.out.println(objectMessage.getUserInfo().getId());
-//					userListPanel.upDateUser(2,objectMessage.getUserInfo().getId());
-//				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

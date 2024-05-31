@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
 
 		// Socket socket = new Socket("localhost", 5000);
 		try {
-			socket = new Socket("192.168.0.7", 5002);
+			socket = new Socket("192.168.0.25", 5002);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			//ois = new ObjectInputStream(socket.getInputStream());
 			output = new Output(oos);

@@ -7,7 +7,6 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import javax.swing.ImageIcon;
@@ -17,11 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Header.ObjectMessage;
-import Header.UserInfo;
 
 public class LoginJPanel extends JPanel {
 
-	private UserInfo userInfo;
 	private MainFrame mContext;
 
 	private ImageIcon logoImg;

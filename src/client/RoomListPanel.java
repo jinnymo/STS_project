@@ -26,13 +26,11 @@ public class RoomListPanel extends JPanel {
 	private List<String[]> targets;
 	private List<ChatPanel> chatPanels;
 	private String[] tempArray;
-	int i = 0;
 
 	public RoomListPanel(PanelAdapter panelAdapter) {
 		initData();
 		setInitLayout();
 		this.panelAdapter = panelAdapter;
-		
 	}
 
 	private void initData() {
@@ -42,7 +40,6 @@ public class RoomListPanel extends JPanel {
 		jList = new JList<String>(model);
 		scrolled = new JScrollPane(jList);
 		jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 	}
 
 	private void setInitLayout() {
@@ -50,31 +47,21 @@ public class RoomListPanel extends JPanel {
 		setSize(400, 550);
 		setLocation(0, 50);
 		setBackground(Color.black);
-
 		scrolled.setSize(400, 550);
 		scrolled.setLocation(0, 0);
-
 		add(scrolled);
+	}
+	public String returnJListText(int i) {
+		return model.get(i).toString();
 	}
 	public ChatPanel returnChatPanel() {
 		int i = jList.getSelectedIndex();
+		System.out.println(chatPanels.get(i).toString());
 		return chatPanels.get(i);
 	}
-	public void showChatPanel() {
-		
-	}
-	
-	//TODO 중복되는 채팅방은 못만들게 해야 하는데 .......
+	//TODO 중복되는 채팅방은 못만들게 해야 하는데 .......나중에.....
 	public void addData(String[] selectUser ) {
-
-		
-		// panelAdapter.setTarget(selectUser);
-		//System.out.println(selectlist.toString());
-		//System.out.println(Arrays.toString(selectUser));
-		//[아이디 입력, asfdsadfas, asdfasdsdfasdfas] 이런 형식 출
 		targets.add(selectUser);
 		model.addElement(Arrays.toString(selectUser));
-		//System.out.println(Arrays.deepToString(targets.get(0)));
-
 	}
 }
