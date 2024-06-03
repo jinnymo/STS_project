@@ -26,6 +26,8 @@ public class ChatPanel extends JPanel implements ActionListener{
 	private PanelAdapter panelAdapter;
 	private JPanel bottomPanel;
 	private JTextField text;
+	
+
 	private JButton sendBtn;
 	private String[] targets;
 	private MainFrame mContext;
